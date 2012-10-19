@@ -15,10 +15,15 @@ class MoviesController < ApplicationController
       @ratings = {"G"=>"1","PG"=>"1","PG-13"=>"1","R"=>"1"}
     end
     if(params[:commit]=="Refresh")
+      if(params[:ratings])
        ratings=params[:ratings].keys
        @movies = Movie.where("rating IN (?)", ratings)
-       if(params[:by])
-          @movies = @movies.order(params[:by])
+         if(params[:by])
+            @movies = @movies.order(params[:by])
+            @sort=params[:by]
+         end
+       else
+         @movies = []
        end
     elsif(params[:by]=="title")
 	     @movies = Movie.order(params[:by]).all
