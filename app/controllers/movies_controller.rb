@@ -8,18 +8,31 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
-    
+    @ratings = params[:ratings]
     @all_ratings = ['G','PG','PG-13','R']
-    if(params[:by]=="title")
-	@movies = Movie.order(params[:by]).all
-    	@sort="title"
-    elsif(params[:by]=="rating")
-	@movies = Movie.order(params[:by]).all
-	@sort = "rating"
-    elsif(params[:by]=="release_date")
-	@movies = Movie.order(params[:by]).all
-	@sort = "release_date"
+    puts @ratings
+    if(@ratings==nil)
+      @ratings = {"G"=>"1","PG"=>"1","PG-13"=>"1","R"=>"1"}
     end
+    if(params[:commit]=="Refresh")
+       ratings=params[:ratings].keys
+       @movies = Movie.where("rating IN (?)", ratings)
+       if(params[:by])
+          @movies = @movies.order(params[:by])
+       end
+    elsif(params[:by]=="title")
+	     @movies = Movie.order(params[:by]).all
+    	 @sort="title"
+    elsif(params[:by]=="rating")
+	     @movies = Movie.order(params[:by]).all
+	     @sort = "rating"
+    elsif(params[:by]=="release_date")
+	     @movies = Movie.order(params[:by]).all
+	     @sort = "release_date"
+    
+    end
+      
+
   end
 
   def new
