@@ -18,7 +18,7 @@ class MoviesController < ApplicationController
 	@sort = "rating"
     elsif(params[:by]=="release_date")
 	@movies = Movie.order(params[:by]).all
-	@sort = "rating"
+	@sort = "release_date"
     end
   end
 
