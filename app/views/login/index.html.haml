@@ -1,0 +1,9 @@
+%form{:class=>"form-inline"}
+  %legend Legend
+  = label :movie, :title, 'Title'
+  = text_field :movie, 'title'
+  %span{:class=>"help-block"} Example block-level help text here.
+  %label{:class=>"checkbox"}
+    =check_box_tag "Check Me Out"
+  %button{:class=>"btn-danger"} 'Submit'
+  
