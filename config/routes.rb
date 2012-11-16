@@ -14,6 +14,7 @@ Rottenpotatoes::Application.routes.draw do
   #   resources :products
   resources :movies
   resources :login
+  root :to=>'login#index'
   #match "/login" => 'movies#login'
 
   # Sample resource route with options:

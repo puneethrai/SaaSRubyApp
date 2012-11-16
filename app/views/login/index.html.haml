@@ -1,9 +1,59 @@
-%form{:class=>"form-inline"}
+- content_for(:title, @TitleName)
+- content_for(:head) do
+  = javascript_include_tag "jquery-latest"
+  = stylesheet_link_tag 'bootstrap'
+  = javascript_include_tag 'bootstrap'
+  = csrf_meta_tags
+%h1 ---------------------------------------------------
+
+.control-group
+  %label.control-label{:for => "inputIcon"} Email address
+  .controls
+    .input-prepend
+      %span.add-on
+        %i.icon-envelope
+      %input#inputIcon.span2{:type => "text"}
+/=form_tag login_path, :method => :post do
+/%form{ :action => "/login", :method => "post" }
+%h1 ---------------------------------------------------
+%form
   %legend Legend
+  %label Label name
+  %input{:placeholder => "Type something…", :type => "text"}
+    %span.help-block Example block-level help text here.
+    %label.checkbox
+      %input{:type => "checkbox"}
+        Check me out
+    %button.btn{:type => "submit"} Submit
+%h1 ---------------------------------------------------
+= form_tag login_path('edit') do
+  = field_set_tag do
+    = label_tag :title, 'Title:'
+    = text_field_tag :title
+    = label_tag :notes, 'Notes:'
+    = text_field_tag :notes
+    = submit_tag 'Save Changes'
+%h1 ---------------------------------------------------
+
+= form_tag login_path('edit'), :method => :put do
+
   = label :movie, :title, 'Title'
   = text_field :movie, 'title'
-  %span{:class=>"help-block"} Example block-level help text here.
-  %label{:class=>"checkbox"}
-    =check_box_tag "Check Me Out"
-  %button{:class=>"btn-danger"} 'Submit'
-  
+
+  = label :movie, :rating, 'Rating'
+  = select :movie, :rating, ['G','PG','PG-13','R','NC-17']
+
+  = label :movie, :release_date, 'Released On'
+  = date_select :movie, :release_date
+
+  = submit_tag 'Update Movie Info'
+%h1 ---------------------------------------------------
+%form{:action => "login/edit", :method => "get"}
+
+  User name:
+  %input{:name => "name", :type => "text"}
+    %br
+      Password name:
+      %input{:name => "password", :type => "text"}
+        %br
+          %input{:type => "submit", :value => "Submit"}
