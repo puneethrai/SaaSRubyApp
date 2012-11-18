@@ -9,6 +9,7 @@ gem 'rails', '3.1.0'
 group :development, :test do
   gem 'sqlite3'
   #gem 'ruby-debug19', :require => 'ruby-debug'
+  gem "rspec-rails", "~> 2.0"
 end
 group :production do
   gem 'pg'
@@ -33,4 +34,5 @@ gem 'jquery-rails'
 
 # To use debugger
 gem 'cucumber'
+gem 'cucumber-rails'
 gem 'haml'

@@ -1,33 +1,37 @@
 -#  This file is app/views/movies/index.html.haml
 - content_for(:title, @TitleName)
-%body
-  
-  %h1.title Rotten Potatoes!
-  #main
-    - if flash[:notice]
-      #notice.message= flash[:notice]
-    - elsif flash[:warning]
-      #warning.message= flash[:warning]
-  %h1 All Movies
-  = form_tag movies_path,:id=>"ratings_form", :method => :get do
-    Include:
-    - @all_ratings.each do |rating|
-      = rating
-      = check_box_tag "ratings[#{rating}]", true, @ratings[rating],:id=>"ratings_"+rating
-    = submit_tag 'Refresh',:id=>"ratings_submit"
-  %table#movies
-    %thead
+- content_for(:head) do
+    = stylesheet_link_tag 'application'
+    = stylesheet_link_tag 'bootstrap'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+
+%h1.title Rotten Potatoes!
+#main
+  - if flash[:notice]
+    #notice.message= flash[:notice]
+  - elsif flash[:warning]
+    #warning.message= flash[:warning]
+%h1 All Movies
+= form_tag movies_path,:id=>"ratings_form", :method => :get do
+  Include:
+  - @all_ratings.each do |rating|
+    = rating
+    = check_box_tag "ratings[#{rating}]", true, @ratings[rating],:id=>"ratings_"+rating
+  = submit_tag 'Refresh',:id=>"ratings_submit"
+%table#movies
+  %thead
+    %tr
+      %th{:class => ("hilite" if @sort == "title")}= link_to "Movie Title",movies_path(:by => 'title', :ratings => @ratings,:commit=>"Refresh"),:id=>"title_header"
+      %th{:class => ("hilite" if @sort == "rating")}= link_to "Rating",movies_path(:by => 'rating', :ratings => @ratings,:commit=>"Refresh"),:id=>"rating"
+      %th{:class => ("hilite" if @sort == "release_date")}= link_to "Release Date",movies_path(:by => 'release_date', :ratings => @ratings,:commit=>"Refresh"),:id=>"release_date_header"  
+      %th More Info
+  %tbody
+    - @movies.each do |movie|
       %tr
-        %th{:class => ("hilite" if @sort == "title")}= link_to "Movie Title",movies_path(:by => 'title', :ratings => @ratings,:commit=>"Refresh"),:id=>"title_header"
-        %th{:class => ("hilite" if @sort == "rating")}= link_to "Rating",movies_path(:by => 'rating', :ratings => @ratings,:commit=>"Refresh"),:id=>"rating"
-        %th{:class => ("hilite" if @sort == "release_date")}= link_to "Release Date",movies_path(:by => 'release_date', :ratings => @ratings,:commit=>"Refresh"),:id=>"release_date_header"  
-        %th More Info
-    %tbody
-      - @movies.each do |movie|
-        %tr
-          %td= movie.title 
-          %td= movie.rating
-          %td= movie.release_date
-          %td= link_to "More about #{movie.title}", movie_path(movie)
-  
-  = link_to 'Add new movie', new_movie_path
+        %td= movie.title 
+        %td= movie.rating
+        %td= movie.release_date
+        %td= link_to "More about #{movie.title}", movie_path(movie)
+
+= link_to 'Add new movie', new_movie_path

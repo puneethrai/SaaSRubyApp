@@ -1,19 +1,11 @@
 !!! 5
-!!! 5
 %html
   %head
     %title= yield(:title)
     = yield(:head)
   %body
-    
     = yield
-%html
-  %head
-    %title Rotten Potatoes!
-    = stylesheet_link_tag 'application'
-    = stylesheet_link_tag 'bootstrap'
-    = javascript_include_tag 'application'
-    = csrf_meta_tags
+
     
   
 
