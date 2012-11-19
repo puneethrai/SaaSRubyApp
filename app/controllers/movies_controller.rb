@@ -1,12 +1,12 @@
 class MoviesController < ApplicationController
   @TitleName ="Rotten Potatoes!"
   def inspect ; "#{title} (#{rating}) - #{release_date.strftime('%D')}" ; end
-  scope :for_kids, :conditions => ['rating IN (:ratings)', :ratings => %w(G PG)]
-  scope :with_good_reviews, lambda { |cutoff|
-    joins(:reviews).
-      group(:movie_id).
-      having("AVG(reviews.potatoes) > #{cutoff}")
-  }
+  #scope :for_kids, :conditions => ['rating IN (:ratings)', :ratings => %w(G PG)]
+  #scope :with_good_reviews, lambda { |cutoff|
+    #joins(:reviews).
+      #group(:movie_id).
+      #having("AVG(reviews.potatoes) > #{cutoff}")
+  #}
   @MoviePage=1
   def show
     id = params[:id] # retrieve movie ID from URI route
